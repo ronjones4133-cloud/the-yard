@@ -1,0 +1,621 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17231f">
+<title>The Port Cellar | The Yard</title>
+<style>
+:root{
+  --bg:#17231f;--panel:#25352c;--panel2:#304137;
+  --accent:#d8aa75;--text:#fff3e4;--muted:#cbd3c9;
+  --border:#4b5d50;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,input:focus-visible,
+select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--accent);outline-offset:3px
+}
+h1,h2,h3{font-family:Georgia,serif;font-weight:400}
+.wrap{max-width:1120px;margin:auto;padding:0 22px}
+.eyebrow{text-transform:uppercase;letter-spacing:3px;
+  font-size:11px;font-weight:700;color:var(--accent)}
+.muted{color:var(--muted)}
+header{background:#111b18;border-bottom:1px solid var(--border)}
+nav{display:flex;justify-content:space-between;align-items:center;
+  gap:15px;min-height:70px;flex-wrap:wrap}
+.logo{font:25px Georgia,serif;color:var(--text);text-decoration:none}
+.navlinks{display:flex;gap:18px;flex-wrap:wrap;font-size:13px}
+.navlinks a{text-decoration:none;color:var(--muted)}
+.navlinks a:hover{color:var(--accent)}
+.hero{position:relative;min-height:420px;display:flex;
+  align-items:center;overflow:hidden;
+  background:
+    linear-gradient(90deg,rgba(14,21,19,.96),rgba(26,28,24,.6)),
+    radial-gradient(ellipse at 85% 50%,#814339,transparent 55%),
+    linear-gradient(135deg,#16251e,#41202b)}
+.hero .wrap{position:relative;z-index:1;width:100%}
+.hero h1{font-size:clamp(48px,8vw,85px);
+  letter-spacing:-2px;line-height:1.05;margin:18px 0}
+.hero h1 em{color:var(--accent)}
+.hero p{max-width:590px;color:#e0d2c2;line-height:1.8}
+.section{padding:55px 0}
+.section h2{font-size:clamp(30px,5vw,45px);margin:12px 0}
+.intro{max-width:760px;line-height:1.75;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);
+  gap:12px;margin-top:25px}
+.stat{background:var(--panel);border:1px solid var(--border);
+  border-radius:10px;padding:18px}
+.stat strong{display:block;font:30px Georgia,serif;color:var(--accent)}
+.stat span{font-size:12px;color:var(--muted)}
+.toolbar{background:#203027;border:1px solid var(--border);
+  border-radius:12px;padding:20px;margin:25px 0}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:15px}
+.tab{white-space:nowrap;background:transparent;color:var(--muted);
+  border:1px solid var(--border);border-radius:25px;
+  padding:9px 13px;font-size:12px}
+.tab.active{background:var(--accent);color:#18231d;
+  border-color:var(--accent);font-weight:700}
+.filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:13px}
+label{display:block;font-size:12px;color:#e2d5c5;margin-bottom:7px}
+input[type=search],input[type=date],select,textarea{
+  background:#142019;border:1px solid #607263;color:var(--text);
+  border-radius:6px;padding:10px;width:100%}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.checkline{display:flex;gap:9px;align-items:center;
+  margin-top:17px;font-size:13px;color:var(--muted)}
+.checkline input{accent-color:var(--accent)}
+.section-head{display:flex;justify-content:space-between;
+  align-items:center;gap:12px;flex-wrap:wrap;margin:25px 0}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:15px}
+.card{background:linear-gradient(145deg,#304137,#213027);
+  border:1px solid var(--border);border-radius:12px;padding:19px;
+  display:flex;flex-direction:column;gap:12px}
+.card h3{font-size:21px;line-height:1.25;margin:0}
+.card-top{display:flex;justify-content:space-between;gap:8px}
+.card-rank{font-size:10px;letter-spacing:1px;color:var(--accent)}
+.tag{display:inline-block;border:1px solid #9e815d;color:#ebc79a;
+  border-radius:4px;padding:5px 7px;font-size:10px;
+  text-transform:uppercase;white-space:nowrap;align-self:start}
+.notes{font-size:13px;line-height:1.65;color:var(--muted);flex:1}
+.price{font:28px Georgia,serif;color:var(--accent)}
+.verdict{font-size:12px;color:#e0cfb8}
+.card-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid #a78865;background:#8c6244;
+  color:#fff7ed;border-radius:6px;padding:11px 16px;
+  font-size:13px;font-weight:650}
+.btn:hover{background:#aa7951}
+.btn.secondary{background:transparent}
+.btn.secondary:hover{background:#405245}
+.smallbtn{border:1px solid #8a866e;background:transparent;
+  color:var(--text);border-radius:6px;padding:9px 11px;font-size:12px}
+.smallbtn:hover,.smallbtn.saved{background:#4d624d}
+.journal{background:#1e2c24;border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border)}
+.journal-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.formbox,.entry{background:#29392f;border:1px solid var(--border);
+  border-radius:12px;padding:21px}
+.field{margin-bottom:18px}
+.slider-head{display:flex;justify-content:space-between;gap:10px}
+.slider-head output{color:var(--accent);font-weight:700}
+textarea{min-height:110px;resize:vertical}
+.entry{margin-bottom:12px}
+.entry h3{font-size:19px;margin:0 0 8px}
+.entry .details{font-size:12px;color:var(--muted);line-height:1.8}
+.entry p{font-size:13px;line-height:1.7;white-space:pre-wrap}
+.entry-actions{display:flex;gap:8px;margin-top:12px}
+.empty{border:1px dashed var(--border);border-radius:10px;
+  padding:24px;color:var(--muted);line-height:1.7}
+footer{padding:30px 0;color:var(--muted);
+  font-size:12px;line-height:1.8}
+@media(max-width:850px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .filters{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:650px){
+  .cards,.journal-grid{grid-template-columns:1fr}
+  .filters{grid-template-columns:1fr 1fr}
+  .stats{gap:7px}.stat{padding:12px}.stat strong{font-size:23px}
+  .section{padding:40px 0}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a class="logo" href="../">The Yard.</a>
+    <div class="navlinks">
+      <a href="../">Home</a>
+      <a href="#discover">Explore Ports</a>
+      <a href="#journal">Tasting Journal</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">The Yard · Tasting Collection</div>
+    <h1>The Port <em>Cellar.</em></h1>
+    <p>Discover the bottle worth slowing down for.
+      Compare styles, save favorites, and build a personal
+      tasting history—one memorable pour at a time.</p>
+    <a class="btn" href="#discover"
+      style="display:inline-block;text-decoration:none;margin-top:12px">
+      Explore the Collection
+    </a>
+  </div>
+</section>
+
+<section class="section wrap" id="discover">
+  <div class="eyebrow">Curated for your palate</div>
+  <h2>Find your next Port.</h2>
+  <p class="intro">A starting collection favoring the nutty,
+    oak-aged complexity of tawny Port, with rich ruby styles
+    included for comparison.</p>
+
+  <div class="stats">
+    <div class="stat"><strong>30</strong><span>Bottles compared</span></div>
+    <div class="stat"><strong>$50</strong><span>Starting budget</span></div>
+    <div class="stat"><strong id="savedCount">0</strong><span>Saved bottles</span></div>
+  </div>
+
+  <div class="toolbar">
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-category="all">All</button>
+      <button class="tab" data-category="top5">Top 5</button>
+      <button class="tab" data-category="top20">Top 20</button>
+      <button class="tab" data-category="splurge">Splurge</button>
+      <button class="tab" data-category="pass">Pass</button>
+      <button class="tab" data-category="saved">My Cellar ★</button>
+    </div>
+    <div class="filters">
+      <div>
+        <label for="budget">Max price: <strong id="budgetLabel">$50</strong></label>
+        <input id="budget" type="range" min="15" max="500"
+          step="5" value="50">
+      </div>
+      <div>
+        <label for="style">Style</label>
+        <select id="style">
+          <option value="all">All styles</option>
+          <option value="Tawny">Tawny</option>
+          <option value="Ruby">Ruby / Reserve</option>
+          <option value="Other">Other / Unverified</option>
+        </select>
+      </div>
+      <div>
+        <label for="sort">Sort</label>
+        <select id="sort">
+          <option value="rank">Recommended</option>
+          <option value="low">Lowest price</option>
+          <option value="high">Highest price</option>
+          <option value="age">Age statement</option>
+        </select>
+      </div>
+      <div>
+        <label for="search">Search</label>
+        <input id="search" type="search" placeholder="Producer or bottle...">
+      </div>
+    </div>
+    <label class="checkline">
+      <input type="checkbox" id="withinBudget" checked>
+      Within my budget only
+    </label>
+  </div>
+
+  <div class="section-head">
+    <h2 id="resultCount" style="font-size:25px;margin:0">Bottles</h2>
+    <button class="btn secondary" id="exportShortlist">
+      Export My Cellar CSV
+    </button>
+  </div>
+  <div class="cards" id="wineCards"></div>
+</section>
+
+<section class="section journal" id="journal">
+  <div class="wrap">
+    <div class="eyebrow">Remember every pour</div>
+    <h2>Your Tasting Journal.</h2>
+    <p class="intro">Record what you actually experience.
+      Your ratings and notes stay in this browser.</p>
+
+    <div class="journal-grid">
+      <div>
+        <form id="journalForm" class="formbox">
+          <input type="hidden" id="editId">
+          <div class="field">
+            <label for="journalWine">Bottle</label>
+            <select id="journalWine" required></select>
+          </div>
+          <div class="field">
+            <label for="tastingDate">Tasting date</label>
+            <input type="date" id="tastingDate" required>
+          </div>
+          <div class="field">
+            <label for="occasion">Occasion</label>
+            <input id="occasion" type="search"
+              placeholder="After dinner, with chocolate...">
+          </div>
+
+          <div class="field">
+            <div class="slider-head">
+              <label for="sweetness">Sweetness</label>
+              <output id="sweetnessOut">3 / 5</output>
+            </div>
+            <input id="sweetness" type="range" min="1" max="5" value="3">
+          </div>
+          <div class="field">
+            <div class="slider-head">
+              <label for="fruit">Fruit intensity</label>
+              <output id="fruitOut">3 / 5</output>
+            </div>
+            <input id="fruit" type="range" min="1" max="5" value="3">
+          </div>
+          <div class="field">
+            <div class="slider-head">
+              <label for="oak">Oak / nuttiness</label>
+              <output id="oakOut">3 / 5</output>
+            </div>
+            <input id="oak" type="range" min="1" max="5" value="3">
+          </div>
+          <div class="field">
+            <div class="slider-head">
+              <label for="complexity">Complexity</label>
+              <output id="complexityOut">3 / 5</output>
+            </div>
+            <input id="complexity" type="range" min="1" max="5" value="3">
+          </div>
+          <div class="field">
+            <div class="slider-head">
+              <label for="overall">Overall enjoyment</label>
+              <output id="overallOut">3 / 5</output>
+            </div>
+            <input id="overall" type="range" min="1" max="5" value="3">
+          </div>
+          <div class="field">
+            <label for="tastingNotes">Your tasting notes</label>
+            <textarea id="tastingNotes"
+              placeholder="Aroma, first sip, finish, pairings..."></textarea>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn" type="submit" id="saveEntry">
+              Save Tasting
+            </button>
+            <button class="btn secondary" type="button" id="resetForm">
+              Clear Form
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div>
+        <div class="section-head" style="margin-top:0">
+          <h3 style="font-size:25px;margin:0">Tasting history</h3>
+          <button class="btn secondary" id="exportJournal">
+            Export CSV
+          </button>
+        </div>
+        <div id="journalEntries"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="../">← Return to The Yard</a>
+    <p>Prices reflect user-provided Bottle Republic screenshots,
+      not live availability. Tasting descriptions are general
+      style expectations. Confirm bottling and bottle size
+      before purchase.</p>
+    <p>Favorites and journal entries are stored locally in your
+      browser, not in GitHub. Export CSV files for backup.</p>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+const raw=[
+["Taylor Fladgate 10-Year Tawny",31.99,"Tawny",10,"top5","Best first bottle","Walnut · dried orange · caramel · oak"],
+["J.H. Andresen Royal Choice 20-Year Tawny",42.99,"Tawny",20,"top5","Value wildcard — verify bottling","Dried fruit · roasted nuts · spice"],
+["Dow's 10-Year Tawny",34.99,"Tawny",10,"top5","Structured alternative","Walnut · citrus peel · dried fruit"],
+["Graham's 10-Year Tawny",36.99,"Tawny",10,"top5","Rich and rounded","Caramel · dried apricot · toasted nuts"],
+["Ramos Pinto 10-Year Tawny",34.99,"Tawny",10,"top5","Balanced alternative","Dried fruit · wood · baking spice"],
+["Cockburn's 10-Year Tawny",31.99,"Tawny",10,"top20","Good alternative","Toffee · nuts · dried fruit"],
+["Taylor Fladgate 20-Year Tawny",54.99,"Tawny",20,"splurge","Premium upgrade","Nuts · orange peel · wood spice"],
+["Ferreira Dona Antónia 20-Year Tawny",54.99,"Tawny",20,"splurge","Premium upgrade","Dried fruit · nuts · wood"],
+["Sandeman 20-Year Tawny",54.99,"Tawny",20,"splurge","Premium upgrade","Toffee · citrus · spice"],
+["Graham's 20-Year Tawny",58.99,"Tawny",20,"splurge","Rich aged tawny","Caramel · nuts · dried fruit"],
+["Dow's 20-Year Tawny",59.99,"Tawny",20,"splurge","Structured aged tawny","Walnut · dried citrus · spice"],
+["Presidential 20-Year Tawny",51.99,"Tawny",20,"splurge","Slightly over budget","Nutty · dried fruit"],
+["Graham's Six Grapes Reserve",22.99,"Ruby",0,"top20","Dark-fruit experiment","Blackberry · plum · chocolate"],
+["Fonseca Bin 27",19.99,"Ruby",0,"top20","Affordable ruby","Black fruit · cocoa"],
+["Croft Tawny Reserve",22.99,"Tawny",0,"top20","Entry-level tawny","Caramel · dried fruit"],
+["Sandeman Founder's Reserve",19.99,"Ruby",0,"top20","Accessible ruby","Blackberry · dark cherry"],
+["Warre's Warrior Reserve",16.99,"Ruby",0,"top20","Budget ruby","Plum · dark berries"],
+["Taylor Fladgate First Estate",20.99,"Ruby",0,"top20","Ruby exploration","Blackcurrant · spice"],
+["Graham's Fine Tawny",19.99,"Tawny",0,"top20","Basic benchmark","Caramel · dried fruit"],
+["Taylor Fladgate Fine Tawny",16.99,"Tawny",0,"top20","Budget benchmark","Dried fruit · nuts"],
+["Graham's 50-Year Tawny",499.99,"Tawny",50,"pass","Far beyond budget","Collector-level aged tawny"],
+["Sandeman 40-Year Tawny",154.99,"Tawny",40,"pass","Far beyond budget","Concentrated aged tawny"],
+["Graham's 30-Year Tawny",134.99,"Tawny",30,"pass","Far beyond budget","Complex aged tawny"],
+["Maynard's 40-Year Tawny",109.99,"Tawny",40,"pass","Far beyond budget","Concentrated aged tawny"],
+["Sandeman 30-Year Tawny",94.99,"Tawny",30,"pass","Save for later","Aged tawny"],
+["250 Years USA Presidents Port Blue",39.99,"Other",0,"pass","Lower priority","Commemorative bottling"],
+["250 Years USA 1776 Liberty's Nectar",39.99,"Other",0,"pass","Lower priority","Commemorative bottling"],
+["Taylor Tawny Port 3L",17.99,"Tawny",0,"pass","Bulk entry-level","Not aged Portuguese tawny"],
+["Taylor Port 3L",17.99,"Other",0,"pass","Bulk entry-level","Not aged Portuguese Port"],
+["Valenzano Jersey Devil Port",16.99,"Other",0,"pass","Different style","New Jersey-made wine"]
+];
+
+const wines=raw.map((w,i)=>({
+  id:i+1,name:w[0],price:w[1],style:w[2],age:w[3],
+  category:w[4],verdict:w[5],notes:w[6],rank:i+1
+}));
+const $=id=>document.getElementById(id);
+const savedKey="theYardPortSavedV1";
+const journalKey="theYardPortJournalV1";
+
+function load(key){
+  try{
+    const x=JSON.parse(localStorage.getItem(key)||"[]");
+    return Array.isArray(x)?x:[];
+  }catch{return []}
+}
+let saved=new Set(load(savedKey).filter(Number.isInteger));
+let entries=load(journalKey);
+let category="all";
+
+function store(key,data){
+  try{
+    localStorage.setItem(key,JSON.stringify(data));
+    return true;
+  }catch{
+    alert("Browser storage is unavailable. Export your notes as CSV.");
+    return false;
+  }
+}
+function el(tag,cls,txt){
+  const e=document.createElement(tag);
+  if(cls)e.className=cls;
+  if(txt!==undefined)e.textContent=txt;
+  return e;
+}
+function renderWines(){
+  const budget=+$("budget").value;
+  const style=$("style").value;
+  const sort=$("sort").value;
+  const q=$("search").value.toLowerCase().trim();
+  const limited=$("withinBudget").checked;
+  $("budgetLabel").textContent="$"+budget;
+  $("savedCount").textContent=saved.size;
+
+  document.querySelectorAll(".tab").forEach(b=>
+    b.classList.toggle("active",b.dataset.category===category));
+
+  let list=wines.filter(w=>
+    (category==="all"||
+      category==="top5"&&w.category==="top5"||
+      category==="top20"&&w.rank<=20||
+      category==="splurge"&&w.category==="splurge"||
+      category==="pass"&&w.category==="pass"||
+      category==="saved"&&saved.has(w.id)) &&
+    (style==="all"||w.style===style) &&
+    (!limited||w.price<=budget) &&
+    w.name.toLowerCase().includes(q)
+  );
+
+  if(sort==="low")list.sort((a,b)=>a.price-b.price);
+  if(sort==="high")list.sort((a,b)=>b.price-a.price);
+  if(sort==="age")list.sort((a,b)=>b.age-a.age||a.rank-b.rank);
+
+  $("resultCount").textContent=list.length+" matching bottles";
+  const root=$("wineCards");
+  root.replaceChildren();
+
+  if(!list.length){
+    root.append(el("div","empty",
+      "No matching bottles. Try changing the filters."));
+    return;
+  }
+
+  for(const w of list){
+    const card=el("article","card");
+    const top=el("div","card-top");
+    const heading=el("div");
+    heading.append(
+      el("div","card-rank",w.rank<=20?"CURATED #"+w.rank:"CELLAR SELECTION"),
+      el("h3","",w.name)
+    );
+    const badge=el("span","tag",
+      (w.age?w.age+" year · ":"")+w.style);
+    top.append(heading,badge);
+    card.append(top,el("div","notes",w.notes));
+
+    const bottom=el("div");
+    bottom.append(
+      el("div","price","$"+w.price.toFixed(2)),
+      el("div","verdict",w.verdict)
+    );
+    card.append(bottom);
+
+    const actions=el("div","card-actions");
+    const save=el("button","smallbtn"+(saved.has(w.id)?" saved":""),
+      saved.has(w.id)?"★ Saved":"☆ Save");
+    save.type="button";
+    save.onclick=()=>{
+      saved.has(w.id)?saved.delete(w.id):saved.add(w.id);
+      store(savedKey,[...saved]);
+      renderWines();
+    };
+    const taste=el("button","smallbtn","Record a tasting");
+    taste.type="button";
+    taste.onclick=()=>{
+      resetForm();
+      $("journalWine").value=String(w.id);
+      $("journal").scrollIntoView({behavior:"smooth"});
+    };
+    actions.append(save,taste);
+    card.append(actions);
+    root.append(card);
+  }
+}
+
+function initSelect(){
+  for(const w of wines){
+    const option=document.createElement("option");
+    option.value=String(w.id);
+    option.textContent=w.name;
+    $("journalWine").append(option);
+  }
+}
+const sliders=["sweetness","fruit","oak","complexity","overall"];
+function syncSliders(){
+  sliders.forEach(k=>$(k+"Out").textContent=$(k).value+" / 5");
+}
+function resetForm(){
+  $("journalForm").reset();
+  $("editId").value="";
+  $("saveEntry").textContent="Save Tasting";
+  $("tastingDate").value=new Date().toLocaleDateString("en-CA");
+  sliders.forEach(k=>$(k).value=3);
+  syncSliders();
+}
+function renderJournal(){
+  const root=$("journalEntries");
+  root.replaceChildren();
+  if(!entries.length){
+    root.append(el("div","empty",
+      "Your tasting story starts here. Save your first entry."));
+    return;
+  }
+
+  const sorted=[...entries].sort((a,b)=>
+    b.date.localeCompare(a.date)||b.createdAt.localeCompare(a.createdAt));
+
+  for(const e of sorted){
+    const w=wines.find(w=>w.id===e.wineId);
+    const box=el("article","entry");
+    box.append(
+      el("h3","",w?w.name:"Unknown bottle"),
+      el("div","details",e.date+(e.occasion?" · "+e.occasion:"")),
+      el("div","details",
+        "Sweet "+e.sweetness+"/5 · Fruit "+e.fruit+
+        "/5 · Oak "+e.oak+"/5 · Complexity "+e.complexity+
+        "/5 · Overall "+e.overall+"/5")
+    );
+    if(e.notes)box.append(el("p","",e.notes));
+    const actions=el("div","entry-actions");
+    const edit=el("button","smallbtn","Edit");
+    edit.onclick=()=>editEntry(e.id);
+    const del=el("button","smallbtn","Delete");
+    del.onclick=()=>{
+      if(!confirm("Delete this tasting entry?"))return;
+      const next=entries.filter(x=>x.id!==e.id);
+      if(store(journalKey,next)){entries=next;renderJournal()}
+    };
+    actions.append(edit,del);
+    box.append(actions);
+    root.append(box);
+  }
+}
+function editEntry(id){
+  const e=entries.find(x=>x.id===id);
+  if(!e)return;
+  $("editId").value=e.id;
+  $("journalWine").value=String(e.wineId);
+  $("tastingDate").value=e.date;
+  $("occasion").value=e.occasion||"";
+  $("tastingNotes").value=e.notes||"";
+  sliders.forEach(k=>$(k).value=e[k]);
+  syncSliders();
+  $("saveEntry").textContent="Update Tasting";
+  $("journalForm").scrollIntoView({behavior:"smooth"});
+}
+function saveTasting(event){
+  event.preventDefault();
+  const id=$("editId").value;
+  const old=entries.find(e=>e.id===id);
+  const e={
+    id:id||(crypto.randomUUID?crypto.randomUUID():String(Date.now())),
+    wineId:+$("journalWine").value,
+    date:$("tastingDate").value,
+    occasion:$("occasion").value.trim(),
+    notes:$("tastingNotes").value.trim(),
+    createdAt:old?old.createdAt:new Date().toISOString()
+  };
+  sliders.forEach(k=>e[k]=+$ (k).value);
+  if(!e.date){alert("Choose a date.");return}
+  const next=id?entries.map(x=>x.id===id?e:x):[...entries,e];
+  if(store(journalKey,next)){
+    entries=next;
+    renderJournal();
+    resetForm();
+  }
+}
+function exportCSV(filename,rows){
+  const csv=rows.map(r=>r.map(v=>
+    '"'+String(v??"").replace(/"/g,'""')+'"'
+  ).join(",")).join("\r\n");
+  const blob=new Blob(["\uFEFF"+csv],
+    {type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=filename;
+  document.body.append(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function exportSaved(){
+  const list=wines.filter(w=>saved.has(w.id));
+  if(!list.length){alert("Save some bottles first.");return}
+  exportCSV("my-port-cellar.csv",[
+    ["Bottle","Price USD","Style","Age","Recommendation","Notes"],
+    ...list.map(w=>[w.name,w.price.toFixed(2),w.style,
+      w.age||"",w.verdict,w.notes])
+  ]);
+}
+function exportJournal(){
+  if(!entries.length){alert("Record a tasting first.");return}
+  exportCSV("my-port-tasting-journal.csv",[
+    ["Bottle","Date","Occasion","Sweetness","Fruit","Oak",
+      "Complexity","Overall","Notes"],
+    ...entries.map(e=>{
+      const w=wines.find(w=>w.id===e.wineId);
+      return [w?w.name:"Unknown",e.date,e.occasion,
+        e.sweetness,e.fruit,e.oak,e.complexity,e.overall,e.notes];
+    })
+  ]);
+}
+
+document.querySelectorAll(".tab").forEach(b=>
+  b.addEventListener("click",()=>{
+    category=b.dataset.category;renderWines();
+  }));
+["budget","style","sort","search","withinBudget"].forEach(id=>
+  $(id).addEventListener("input",renderWines));
+sliders.forEach(k=>$(k).addEventListener("input",syncSliders));
+$("journalForm").addEventListener("submit",saveTasting);
+$("resetForm").addEventListener("click",resetForm);
+$("exportShortlist").addEventListener("click",exportSaved);
+$("exportJournal").addEventListener("click",exportJournal);
+
+initSelect();
+resetForm();
+renderWines();
+renderJournal();
+</script>
+</body>
+</html>
