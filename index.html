@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17231f">
+
+  <title>The Yard | The Good Stuff Comes Home</title>
+
+  <style>
+    :root {
+      --forest: #17231f;
+      --forest-light: #27382f;
+      --copper: #d8aa75;
+      --cream: #fff3e4;
+      --muted: #cbd3c9;
+      --border: #4b5d50;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--forest);
+      color: var(--cream);
+      font-family: system-ui, Arial, sans-serif;
+    }
+
+    a { color: inherit; }
+
+    .container {
+      width: min(1100px, 90%);
+      margin: auto;
+    }
+
+    header {
+      background: #111b18;
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font: 30px Georgia, serif;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--copper);
+    }
+
+    .hero {
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      background-image:
+        linear-gradient(
+          90deg,
+          rgba(8, 17, 18, .90),
+          rgba(8, 17, 18, .55) 60%,
+          rgba(8, 17, 18, .20)
+        ),
+        linear-gradient(
+          180deg,
+          rgba(20, 37, 53, .30),
+          rgba(70, 36, 20, .35)
+        ),
+        url("assets/images/yard-porch.jpg");
+
+      background-position: center;
+      background-size: cover;
+    }
+
+    .hero-content {
+      max-width: 670px;
+      padding: 80px 0;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--copper);
+    }
+
+    h1, h2, h3 {
+      font-family: Georgia, serif;
+      font-weight: 400;
+    }
+
+    h1 {
+      font-size: clamp(68px, 11vw, 125px);
+      line-height: 1;
+      letter-spacing: -4px;
+      margin: 20px 0;
+    }
+
+    h1 span { color: var(--copper); }
+
+    .tagline {
+      font: italic clamp(23px, 3vw, 35px)/1.4
+            Georgia, serif;
+      max-width: 580px;
+    }
+
+    .hero-description {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #e4d8ca;
+      max-width: 530px;
+      margin: 25px 0;
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--copper);
+      color: #17231f;
+      padding: 14px 24px;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .button:hover { background: #f0c99c; }
+
+    section.content {
+      padding: 75px 0;
+    }
+
+    .section-title {
+      font-size: clamp(34px, 5vw, 48px);
+      margin: 15px 0;
+    }
+
+    .section-description {
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 720px;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 35px;
+    }
+
+    .tool-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--forest-light);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 25px;
+      min-height: 230px;
+      text-decoration: none;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--copper);
+    }
+
+    .tool-icon {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    .tool-card h3 {
+      font-size: 25px;
+      margin: 10px 0;
+    }
+
+    .tool-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .tool-link {
+      color: var(--copper);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .about {
+      background: #213028;
+    }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 35px;
+      align-items: center;
+    }
+
+    .about img {
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+    }
+
+    footer {
+      padding: 35px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 700px) {
+      .hero { min-height: 560px; }
+      .about-layout { grid-template-columns: 1fr; }
+      .nav-links { gap: 12px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav class="container">
+    <a class="brand" href="./">The Yard.</a>
+
+    <div class="nav-links">
+      <a href="#explore">Explore</a>
+      <a href="#our-story">Our Story</a>
+      <a href="port-cellar/">Port Cellar</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+
+        <div class="eyebrow">
+          Welcome to The Yard
+        </div>
+
+        <h1>The Yard<span>.</span></h1>
+
+        <p class="tagline">
+          The world is out there.<br>
+          The good stuff comes home.
+        </p>
+
+        <p class="hero-description">
+          Good food. Great pours. Favorite places.
+          A personal collection of discoveries,
+          experiences, and stories worth keeping.
+        </p>
+
+        <a href="#explore" class="button">
+          Come on in
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="content" id="explore">
+    <div class="container">
+
+      <div class="eyebrow">Find your favorite corner</div>
+
+      <h2 class="section-title">
+        Explore The Yard
+      </h2>
+
+      <p class="section-description">
+        Every great experience deserves a place
+        to be remembered. Explore the collections,
+        discover something new, and keep track
+        of what makes it special.
+      </p>
+
+      <div class="tool-grid">
+
+        <a class="tool-card" href="port-cellar/">
+          <div class="tool-icon">🍷</div>
+          <h3>The Port Cellar</h3>
+          <p>
+            Explore Port wines, compare bottles,
+            and keep a personal tasting journal.
+          </p>
+          <span class="tool-link">Explore the Cellar →</span>
+        </a>
+
+        <a class="tool-card" href="dining-journal/">
+          <div class="tool-icon">🍽️</div>
+          <h3>Dining Journal</h3>
+          <p>
+            Remember great restaurants, favorite
+            dishes, and places worth revisiting.
+          </p>
+          <span class="tool-link">Coming soon →</span>
+        </a>
+
+        <a class="tool-card" href="bourbon-bench/">
+          <div class="tool-icon">🥃</div>
+          <h3>Bourbon Bench</h3>
+          <p>
+            Explore bottles, record tasting notes,
+            and discover favorite pours.
+          </p>
+          <span class="tool-link">Coming soon →</span>
+        </a>
+
+        <a class="tool-card" href="from-the-grill/">
+          <div class="tool-icon">🔥</div>
+          <h3>From the Grill</h3>
+          <p>
+            Recipes, outdoor cooking, grilling
+            experiments, and food pairings.
+          </p>
+          <span class="tool-link">Coming soon →</span>
+        </a>
+
+        <a class="tool-card" href="notes/">
+          <div class="tool-icon">📖</div>
+          <h3>Notes from the Yard</h3>
+          <p>
+            A personal collection of memories,
+            recommendations, and discoveries.
+          </p>
+          <span class="tool-link">Coming soon →</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="content about" id="our-story">
+    <div class="container about-layout">
+
+      <div>
+        <div class="eyebrow">The story behind the name</div>
+
+        <h2 class="section-title">
+          It all comes back to The Yard.
+        </h2>
+
+        <p class="section-description">
+          The Yard is more than a physical place.
+          It's where great meals are shared,
+          memorable drinks are enjoyed,
+          and conversations last a little longer.
+        </p>
+
+        <p class="section-description">
+          Whether an experience happens at home,
+          at a restaurant, or somewhere across
+          the world, this is where its story
+          finds a home.
+        </p>
+      </div>
+
+      <img
+        src="assets/images/yard-overview.jpg"
+        alt="The outdoor living and entertaining space
+             that inspired The Yard"
+        loading="lazy">
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <strong>The Yard.</strong>
+    <p>
+      The world is out there.
+      The good stuff comes home.
+    </p>
+    <p>
+      Built for good food, great pours,
+      favorite places, and stories worth keeping.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
